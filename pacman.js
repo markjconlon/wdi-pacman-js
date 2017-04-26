@@ -62,7 +62,9 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
-  console.log('(p) Eat Power-Pellets');
+  if (powerPellets > 0) {
+    console.log('(p) Eat Power-Pellets');
+  }
   console.log('(1) Eat Inky');
   console.log('(2) Eat Blinky');
   console.log('(3) Eat Pinky');
@@ -85,6 +87,7 @@ function eatDot() {
 function eatPowerPellet(){
   console.log('\nPower Pellet Consumed');
   score += 50;
+  powerPellets -= 1;
   ghosts.forEach(function(ghost) {
     ghost.edible = true;
   });
@@ -92,8 +95,8 @@ function eatPowerPellet(){
 
 function eatGhost(ghost){
   if (ghost.edible) {
-    console.log('\nYou ate' + ghost.name);
-    score += 20;
+    console.log('\nYou ate ' + ghost.name + ' who is the ' + ghost.character);
+    score += 200;
 }   else {
       console.log('\nYou were killed by ' + ghost.name + ' the ' + ghost.colour + ' ghost');
       lives -= 1
@@ -120,7 +123,10 @@ function processInput(key) {
       eatDot();
       break;
     case 'p':
-      eatPowerPellet();
+      if (powerPellets > 0) {
+        eatPowerPellet();
+        break;
+      };
       break;
     case '1':
       eatGhost(inky);
