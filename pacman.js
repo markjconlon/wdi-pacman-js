@@ -86,10 +86,17 @@ function eatGhost(ghost){
 }   else {
       console.log('\nYou were killed by ' + ghost.name + ' the ' + ghost.colour + ' ghost');
       lives -= 1
+      displayStats()
+      checkLives()
     }
 
 }
 
+function checkLives(){
+  if (lives <= 0) {
+    process.exit();
+  }
+}
 
 // Process Player's Input
 function processInput(key) {
