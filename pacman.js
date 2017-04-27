@@ -45,6 +45,9 @@ ghosts = [inky, blinky, pinky, clyde];
 // Draw the screen functionality
 function drawScreen() {
   clearScreen();
+  if (levelProgress()) {
+    process.exit();
+  }
   setTimeout(function() {
     displayStats();
     displayMenu();
@@ -162,10 +165,10 @@ function checkLives(){
 }
 
 function levelProgress(){
-  if (level = 256 && (powerPellets === 0 && totalDots === 0)) {
+  if (level === 256 && (powerPellets === 0 && totalDots === 0)) {
     console.log('You win!');
     return true;
-  }else {
+  }else if (level != 256 && (powerPellets === 0 && totalDots === 0)) {
     level += 1;
     totalDots = 240;
     powerPellets = 4;
