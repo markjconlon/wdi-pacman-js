@@ -4,6 +4,7 @@ var lives = 2;
 var powerPellets = 4;
 var totalDots = 240;
 var eatenGhosts = 0;
+var level = 1;
 
 // Define your ghosts here
 
@@ -56,6 +57,7 @@ function clearScreen() {
 }
 
 function displayStats() {
+  console.log('Level:' + level)
   console.log('Score: ' + score + '     Lives: ' + lives );
   console.log('Dots left: ' + totalDots);
   console.log('\nPower-Pellets: ' + powerPellets );
@@ -67,7 +69,7 @@ function displayMenu() {
   if (powerPellets > 0) {
     console.log('(p) Eat Power-Pellets');
   }
-  if (totalDots >= 100) {
+  if (totalDots >= 10) {
     console.log('(g) Gorge on Dots!');
   }
   if (totalDots >= 100) {
@@ -159,6 +161,18 @@ function checkLives(){
   }
 }
 
+function levelProgress(){
+  if (level = 256 && (powerPellets === 0 && totalDots === 0)) {
+    console.log('You win!');
+    return true;
+  }else {
+    level += 1;
+    totalDots = 240;
+    powerPellets = 4;
+    return false;
+  }
+}
+
 // Process Player's Input
 function processInput(key) {
   switch(key) {
@@ -167,15 +181,27 @@ function processInput(key) {
       process.exit();
       break;
     case 'd':
+      if (levelProgress()) {
+        process.exit();
+        break;
+      }
       eatDot();
       break;
     case 'p':
       if (powerPellets > 0) {
+        if (levelProgress()) {
+          process.exit();
+          break;
+        }
         eatPowerPellet();
         break;
       };
       break;
     case 'g':
+      if (levelProgress()) {
+        process.exit();
+        break;
+      }
       gorgeDot();
       break;
     case 'i':
